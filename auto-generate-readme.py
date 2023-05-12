@@ -17,7 +17,7 @@ class MarkdownParser():
         mark = '#' * level
         for line in self.lines:
             if start and not end:
-                end |= (f'{mark} ' in line[:(level + 1)]) and (not f'{mark} {name}' in line)
+                end |= f'{mark} ' in line[:(level + 1)] and f'{mark} {name}' not in line
                 if end:
                     start = False
                 else:
@@ -29,8 +29,7 @@ class MarkdownParser():
                     if include_header:
                         content.append(line)
 
-        content = '\n'.join(content)
-        return content
+        return '\n'.join(content)
 
     def overview(self):
         overview = self.header('Overview', 2)
@@ -56,8 +55,8 @@ def combine(text, parsers):
     features = features.replace('README.md#', '#')
 
     text = text.replace('# C++\n', f'# C++{title}\n')
-    text = text.replace(f'<!-- overview -->', overview)
-    text = text.replace(f'<!-- features -->', features)
+    text = text.replace('<!-- overview -->', overview)
+    text = text.replace('<!-- features -->', features)
 
     return text
 
